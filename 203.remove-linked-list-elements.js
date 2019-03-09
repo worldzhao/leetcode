@@ -36,6 +36,7 @@
  * 删除节点：找到需要被删除节点的前一个节点（头节点除外需要特殊处理）
  * 解法一：使用dummyHead避免头结点需要被删除的特殊情况，使头结点也变成中间节点，特殊 => 不特殊
  * 解法二：先保证头节点不是要删除的节点（即先把要删除的头结点删了）
+ * 解法三：使用递归
  */
 
 // var removeElements = function(head, val) {
@@ -52,21 +53,34 @@
 //   return dummyHead.next
 // }
 
+// var removeElements = function(head, val) {
+//   while (head && head.val === val) {
+//     const delNode = head
+//     head = head.next
+//     delNode.next = null
+//   }
+//   let p = head
+//   while (p) {
+//     if (p.next && p.next.val === val) {
+//       let delNode = p.next
+//       p.next = delNode.next
+//       delNode.next = null
+//     } else {
+//       p = p.next
+//     }
+//   }
+//   return head
+// }
+
 var removeElements = function(head, val) {
-  while (head && head.val === val) {
-    const delNode = head
-    head = head.next
-    delNode.next = null
+  if (head === null) {
+    return null
   }
-  let p = head
-  while (p) {
-    if (p.next && p.next.val === val) {
-      let delNode = p.next
-      p.next = delNode.next
-      delNode.next = null
-    } else {
-      p = p.next
-    }
+  const res = removeElements(head.next, val)
+  if (head.val === val) {
+    return res
+  } else {
+    head.next = res
+    return head
   }
-  return head
 }
