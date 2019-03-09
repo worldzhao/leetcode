@@ -33,36 +33,40 @@
  * @return {ListNode}
  */
 /**
- * 使用dummyHead避免头结点需要被删除的特殊情况，使头结点也变成中间节点
+ * 删除节点：找到需要被删除节点的前一个节点（头节点除外需要特殊处理）
+ * 解法一：使用dummyHead避免头结点需要被删除的特殊情况，使头结点也变成中间节点，特殊 => 不特殊
+ * 解法二：先保证头节点不是要删除的节点（即先把要删除的头结点删了）
  */
 
+// var removeElements = function(head, val) {
+//   const dummyHead = new ListNode(-1)
+//   dummyHead.next = head
+//   let p = dummyHead
+//   while (p) {
+//     if (p.next && p.next.val === val) {
+//       p.next = p.next.next
+//     } else {
+//       p = p.next
+//     }
+//   }
+//   return dummyHead.next
+// }
+
 var removeElements = function(head, val) {
-  // const dummyHead = new ListNode(-1)
-  // dummyHead.next = head
-  // let p = dummyHead
+  while (head && head.val === val) {
+    const delNode = head
+    head = head.next
+    delNode.next = null
+  }
   let p = head
   while (p) {
     if (p.next && p.next.val === val) {
-      p.next = p.next.next
+      let delNode = p.next
+      p.next = delNode.next
+      delNode.next = null
     } else {
       p = p.next
     }
   }
-  return dummyHead.next
+  return head
 }
-
-// const l = {
-//   val: 1,
-//   next: {
-//     val: 2,
-//     next: {
-//       val: 6,
-//       next: {
-//         val: 3,
-//         next: { val: 4, next: { val: 5, next: { val: 6, next: null } } }
-//       }
-//     }
-//   }
-// }
-
-// console.log(JSON.stringify(removeElements({ val: 1, next: null }, 1)))
