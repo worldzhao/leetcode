@@ -33,19 +33,32 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+// var reverseList = function(head) {
+//   let p, q, r
+//   if (!head) return null
+//   p = head
+//   q = p.next
+//   p.next = null
+//   while (q) {
+//     r = q.next
+//     q.next = p
+//     p = q
+//     q = r
+//   }
+//   return p
+// }
+
 var reverseList = function(head) {
-  let p, q, r
   if (!head) return null
-  p = head
-  q = p.next
-  p.next = null
-  while (q) {
-    r = q.next
-    q.next = p
-    p = q
-    q = r
+  let temp = head.next
+  head.next = null
+  const reverse = (prev, cur) => {
+    if (!cur) return prev
+    const temp = cur.next
+    cur.next = prev
+    return reverse(cur, temp)
   }
-  return p
+  return reverse(head, temp)
 }
 
 // const head = {
@@ -64,4 +77,4 @@ var reverseList = function(head) {
 //     }
 //   }
 // }
-// console.log(reverseList(head))
+// console.log(JSON.stringify(reverseList(head)))
