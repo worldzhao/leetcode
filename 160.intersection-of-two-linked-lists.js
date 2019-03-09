@@ -93,16 +93,59 @@
 //   return dummyHead.next
 // }
 
-const getListLength = l => {
-  let i = 0
-  let p = l
-  while (p) {
-    i++
-    p = p.next
-  }
-  return i
-}
+// const getListLength = l => {
+//   let i = 0
+//   let p = l
+//   while (p) {
+//     i++
+//     p = p.next
+//   }
+//   return i
+// }
 
+/**
+ * 解法一：
+ */
+// var getIntersectionNode = function(headA, headB) {
+//   let p = headA
+//   let q = headB
+//   /**
+//    * 获取链表长度
+//    */
+//   const lenP = getListLength(p)
+//   const lenQ = getListLength(q)
+//   /**
+//    * 抹去较长链表前面多出的部分
+//    */
+//   if (lenP > lenQ) {
+//     let times = lenP - lenQ
+//     while (times) {
+//       p = p.next
+//       times--
+//     }
+//   }
+//   if (lenQ > lenP) {
+//     let times = lenQ - lenP
+//     while (times) {
+//       q = q.next
+//       times--
+//     }
+//   }
+//   /**
+//    * 比较节点是否相等即可
+//    */
+//   while (p && q) {
+//     if (p === q) {
+//       return p
+//     }
+//     p = p.next
+//     q = q.next
+//   }
+//   return null
+// }
+/**
+ * 解法二
+ */
 /**
  * @param {ListNode} headA
  * @param {ListNode} headB
@@ -111,35 +154,11 @@ const getListLength = l => {
 var getIntersectionNode = function(headA, headB) {
   let p = headA
   let q = headB
-  const lenP = getListLength(p)
-  const lenQ = getListLength(q)
-  if (lenP > lenQ) {
-    let times = lenP - lenQ
-    while (times) {
-      p = p.next
-      times--
-    }
+  while (p !== q) {
+    // 如果长度相同，且没有交点，在循环到第一轮末尾时，pA和pB会同时为null，这时就相等退出了。
+    // 如果长度不同，没有交点，会在第二轮末尾同时为null，相等退出。
+    p = p === null ? headB : p.next
+    q = q === null ? headA : q.next
   }
-  if (lenQ > lenP) {
-    let times = lenQ - lenP
-    while (times) {
-      q = q.next
-      times--
-    }
-  }
-  while (p && q) {
-    if (p === q) {
-      return p
-    }
-    p = p.next
-    q = q.next
-  }
-  return null
+  return p
 }
-
-// console.log(
-//   getIntersectionNode(
-//     getLinkList([4, 2, 3, 4, 5]),
-//     getLinkList([5, 9, 2, 8, 4, 5])
-//   )
-// )
