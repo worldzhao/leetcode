@@ -46,7 +46,9 @@
  * @return {number}
  */
 var getMinimumDifference = function(root) {
-  /** 对二叉搜索树进行中序遍历可得到排序 */
+  /** 对二叉搜索树进行中序遍历可得到排序
+   * 或者遍历一波直接sort?
+   */
   const sortedVals = []
   const inOrder = node => {
     if (!node) return
@@ -55,14 +57,9 @@ var getMinimumDifference = function(root) {
     inOrder(node.right)
   }
   inOrder(root)
-  let ans = null
+  let ans = Number.MAX_SAFE_INTEGER
   for (let i = 0; i < sortedVals.length - 1; i++) {
-    const val = sortedVals[i]
-    const nextVal = sortedVals[i + 1]
-    ans =
-      ans === null
-        ? Math.abs(val - nextVal)
-        : Math.min(ans, Math.abs(val - nextVal))
+    ans = Math.min(ans, Math.abs(sortedVals[i] - sortedVals[i + 1]))
   }
   return ans
 }
