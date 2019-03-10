@@ -45,6 +45,7 @@
  * @param {TreeNode} root
  * @return {number}
  */
+/* 递归版中序遍历 */
 var getMinimumDifference = function(root) {
   /** 对二叉搜索树进行中序遍历可得到排序
    * 或者遍历一波直接sort?

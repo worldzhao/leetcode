@@ -53,18 +53,34 @@
  * @return {number[]}
  */
 /* 非递归 */
-var inorderTraversal = function(root) {}
-const root = {
-  val: 1,
-  left: null,
-  right: {
-    val: 2,
-    right: null,
-    left: {
-      val: 3,
-      left: null,
-      right: null
+var inorderTraversal = function(root) {
+  const stack = []
+  const result = []
+  let p = root
+  while (stack.length || p) {
+    while (p) {
+      stack.push(p)
+      p = p.left
+    }
+    if (stack.length) {
+      p = stack.pop()
+      result.push(p.val)
+      p = p.right
     }
   }
+  return result
 }
-console.log(inorderTraversal(root))
+// const root = {
+//   val: 1,
+//   left: null,
+//   right: {
+//     val: 2,
+//     right: null,
+//     left: {
+//       val: 3,
+//       left: null,
+//       right: null
+//     }
+//   }
+// }
+// console.log(inorderTraversal(root))
