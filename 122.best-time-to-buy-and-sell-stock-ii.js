@@ -48,8 +48,30 @@
  */
 var maxProfit = function(prices) {
   let maxProfit = 0
-  for (let i = 0; i < prices.length; i++) {
-    const p = prices[i]
-   
+  let i = 0
+  while (i < prices.length - 1) {
+    while (i < prices.length - 1 && prices[i] >= prices[i + 1]) {
+      i++
+    }
+    const valley = prices[i]
+    while (i < prices.length - 1 && prices[i] <= prices[i + 1]) {
+      i++
+    }
+    const peek = prices[i]
+    maxProfit += peek - valley
   }
+  return maxProfit
 }
+
+// console.log(maxProfit([3, 3]))
+
+// var maxProfit = function(prices) {
+//   let maxProfit = 0
+//   for (let i = 1; i < prices.length; i++) {
+//     const profit = prices[i] - prices[i-1]
+//     if (profit > 0) {
+//       maxProfit += profit
+//     }
+//   }
+//   return maxProfit
+// }
