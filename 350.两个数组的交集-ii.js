@@ -45,15 +45,65 @@
  * @param {number[]} nums2
  * @return {number[]}
  */
+/**
+ * 使用js原生api
+ */
+// var intersect = function(nums1, nums2) {
+//   let result = []
+//   for (let i = 0; i < nums1.length; i++) {
+//     const e = nums1[i]
+//     const targetIndex = nums2.indexOf(e)
+//     if (targetIndex !== -1) {
+//       result.push(e)
+//       nums2.splice(targetIndex, 1)
+//     }
+//   }
+//   return result
+// }
+
+/**
+ * 使用map
+ */
+// var intersect = function(nums1, nums2) {
+//   const res = []
+//   const hashTable = nums2.reduce((acc, cur) => {
+//     if (typeof acc[cur] === 'undefined') {
+//       acc[cur] = 1
+//     } else {
+//       acc[cur] += 1
+//     }
+//     return acc
+//   }, {})
+//   for (let i = 0; i < nums1.length; i++) {
+//     const e = nums1[i]
+//     if (typeof hashTable[e] !== 'undefined' && hashTable[e] !== 0) {
+//       hashTable[e] -= 1
+//       res.push(e)
+//     }
+//   }
+//   return res
+// }
+/**
+ * 如果排好顺序，采用双指针法
+ */
 var intersect = function(nums1, nums2) {
-  let result = []
-  for (let i = 0; i < nums1.length; i++) {
-    const e = nums1[i]
-    const targetIndex = nums2.indexOf(e)
-    if (targetIndex !== -1) {
-      result.push(e)
-      nums2.splice(targetIndex, 1)
+  const sortedNums1 = nums1.sort((a, b) => a - b)
+  const sortedNums2 = nums2.sort((a, b) => a - b)
+  const len1 = nums1.length
+  const len2 = nums2.length
+  const res = []
+  let i = 0
+  let j = 0
+  while (i < len1 && j < len2) {
+    if (sortedNums1[i] === sortedNums2[j]) {
+      res.push(sortedNums1[i])
+      i++
+      j++
+    } else if (sortedNums1[i] < sortedNums2[j]) {
+      i++
+    } else {
+      j++
     }
   }
-  return result
+  return res
 }
