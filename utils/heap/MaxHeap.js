@@ -1,6 +1,11 @@
 class MaxHeap {
-  constructor() {
-    this.data = []
+  constructor(initArr) {
+    if (Array.isArray(initArr)) {
+      this.data = initArr
+      this.heapify()
+    } else {
+      this.data = []
+    }
   }
 
   /**
@@ -60,6 +65,7 @@ class MaxHeap {
 
   /**
    * add element to the heap
+   * 时间复杂度 O(logn) 树的高度
    * @param {*} e
    */
   add(e) {
@@ -90,6 +96,7 @@ class MaxHeap {
 
   /**
    * pop the max element in the heap
+   * 时间复杂度 O(logn) 树的高度
    * @return {number}
    */
   extractMax() {
@@ -134,12 +141,27 @@ class MaxHeap {
     this._siftDown(0)
     return ret
   }
+
+  /**
+   * 从倒数第一个非叶子节点开始遍历到第一个节点，同时对每一个节点进行sift down操作
+   * 倒数第一个非叶子节点为最后一个节点的父节点
+   */
+  heapify() {
+    for (let i = this.parent(this.size() - 1); i >= 0; i--) {
+      this._siftDown(i)
+    }
+  }
 }
 
-const h = new MaxHeap()
-const testArr = [21, 2, 1, 54, 23, 14, 52, 32, 51, 44]
-testArr.forEach(e => h.add(e))
-
+/**
+ * 将n个元素逐个插入到一个空堆中，算法复杂度为O(nlogn)
+ * n * logn 时间复杂度
+ * 而heapify的时间复杂度为O(n)
+ */
+// const h = new MaxHeap()
+// const testArr = [21, 2, 1, 54, 23, 14, 52, 32, 51, 44]
+// testArr.forEach(e => h.add(e))
+const h = new MaxHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44])
 console.log('----------')
 console.log('the heap is:', h.data)
 console.log('----------')
