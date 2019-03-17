@@ -8,23 +8,45 @@ const MaxHeap = require('./MaxHeap')
 // const arr = [21, 2, 1, 54, 23, 14, 52, 32, 51, 44]
 // arr.forEach(e => h.add(e))
 
-const h = new MaxHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44])
+// const maxHeap = new MaxHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44])
+
+// console.log('----------')
+// console.log('the heap is:', maxHeap.data)
+// console.log('----------')
+
+// maxHeap.replace(50)
+// console.log('----------')
+// console.log('after replaced by 50:', maxHeap.data)
+// console.log('----------')
+
+// let res = []
+
+// while (!maxHeap.isEmpty()) {
+//   res.push(maxHeap.extractMax())
+// }
+
+// console.log('----------')
+// console.log('after sorting by extractMax:', res)
+// console.log('----------')
+
+const MinHeap = require('./MinHeap')
+const minHeap = new MinHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44])
 
 console.log('----------')
-console.log('the heap is:', h.data)
+console.log('the heap is:', minHeap.data)
 console.log('----------')
 
-h.replace(50)
+minHeap.replace(50)
 console.log('----------')
-console.log('after replaced by 50:', h.data)
+console.log('after replaced by 50:', minHeap.data)
 console.log('----------')
 
 let res = []
 
-while (!h.isEmpty()) {
-  res.push(h.extractMax())
+while (!minHeap.isEmpty()) {
+  res.push(minHeap.extractMin())
 }
 
 console.log('----------')
-console.log('after sorting by extractMax:', res)
+console.log('after sorting by extractMin:', res)
 console.log('----------')
