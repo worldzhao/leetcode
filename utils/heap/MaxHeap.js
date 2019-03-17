@@ -107,7 +107,7 @@ class MaxHeap {
   _siftDown(i) {
     while (this.leftChild(i) < this.size()) {
       const leftChildIndex = this.leftChild(i)
-      const rightChildIndex = this.rightChild(i)
+      const rightChildIndex = leftChildIndex + 1
       let tempIndex = leftChildIndex
       if (
         rightChildIndex < this.size() &&
@@ -122,14 +122,39 @@ class MaxHeap {
       i = tempIndex
     }
   }
+
+  /**
+   * add a new element after extractMax
+   * @param {number} e the element need to add
+   * @return {number} the max element in current heap
+   */
+  replace(e) {
+    const ret = this.findMax()
+    this.data[0] = e
+    this._siftDown(0)
+    return ret
+  }
 }
 
 const h = new MaxHeap()
 const testArr = [21, 2, 1, 54, 23, 14, 52, 32, 51, 44]
 testArr.forEach(e => h.add(e))
+
+console.log('----------')
+console.log('the heap is:', h.data)
+console.log('----------')
+
+h.replace(50)
+console.log('----------')
+console.log('after replaced by 50:', h.data)
+console.log('----------')
+
 let res = []
+
 while (!h.isEmpty()) {
   res.push(h.extractMax())
 }
-console.log('before:', testArr)
-console.log('after:', res)
+
+console.log('----------')
+console.log('after sorting by extractMax:', res)
+console.log('----------')
