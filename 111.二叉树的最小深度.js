@@ -43,10 +43,24 @@
  */
 var minDepth = function(root) {
   if (root === null) return 0
-  const leftDepth = minDepth(root.left)
-  const rightDepth = minDepth(root.right)
-  if (leftDepth && rightDepth) {
-    return Math.min(leftDepth, rightDepth) + 1
+  const queue = []
+  let res = 0
+  queue.push(root)
+  while (queue.length) {
+    res++
+    const len = queue.length
+    let i = 0
+    while (i < len) {
+      const front = queue.shift()
+      if (front.left === null && front.right === null) return res
+      if (front.left) {
+        queue.push(front.left)
+      }
+      if (front.right) {
+        queue.push(front.right)
+      }
+      i++
+    }
   }
-  return leftDepth + rightDepth + 1
+  return res
 }
