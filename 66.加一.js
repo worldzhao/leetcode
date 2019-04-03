@@ -36,35 +36,51 @@
  * @param {number[]} digits
  * @return {number[]}
  */
+// var plusOne = function(digits) {
+//   const len = digits.length
+//   const res = []
+//   let needFurther = false
+//   for (let i = len - 1; i >= 0; i--) {
+//     const el = digits[i]
+//     if (i === len - 1) {
+//       if (el === 9) {
+//         res.unshift(0)
+//         needFurther = true
+//       } else {
+//         res.unshift(el + 1)
+//         needFurther = false
+//       }
+//     } else if (needFurther) {
+//       if (el === 9) {
+//         res.unshift(0)
+//         needFurther = true
+//       } else {
+//         res.unshift(el + 1)
+//         needFurther = false
+//       }
+//     } else {
+//       res.unshift(el)
+//       needFurther = false
+//     }
+//   }
+//   if (res[0] === 0) {
+//     return [1, ...res]
+//   }
+//   return res
+// }
 var plusOne = function(digits) {
   const len = digits.length
-  const res = []
-  let needFurther = false
-  for (let i = len - 1; i >= 0; i--) {
-    const el = digits[i]
-    if (i === len - 1) {
-      if (el === 9) {
-        res.unshift(0)
-        needFurther = true
-      } else {
-        res.unshift(el + 1)
-        needFurther = false
-      }
-    } else if (needFurther) {
-      if (el === 9) {
-        res.unshift(0)
-        needFurther = true
-      } else {
-        res.unshift(el + 1)
-        needFurther = false
-      }
-    } else {
-      res.unshift(el)
-      needFurther = false
+  digits[digits.length - 1] += 1
+  for (let i = len - 1; i >= 1; i--) {
+    const element = digits[i]
+    if (digits[i] === 10) {
+      digits[i] -= 10
+      digits[i - 1] += 1
     }
   }
-  if (res[0] === 0) {
-    return [1, ...res]
+  if (digits[0] === 10) {
+    digits[0] -= 9
+    digits.push(0)
   }
-  return res
+  return digits
 }
