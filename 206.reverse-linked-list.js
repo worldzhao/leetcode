@@ -33,48 +33,46 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-// var reverseList = function(head) {
-//   let p, q, r
-//   if (!head) return null
-//   p = head
-//   q = p.next
-//   p.next = null
-//   while (q) {
-//     r = q.next
-//     q.next = p
-//     p = q
-//     q = r
-//   }
-//   return p
-// }
 
-var reverseList = function(head) {
-  if (!head) return null
-  let temp = head.next
-  head.next = null
-  const reverse = (prev, cur) => {
-    if (!cur) return prev
-    const temp = cur.next
-    cur.next = prev
-    return reverse(cur, temp)
+// var reverseList = function(head) {
+//   if (!head) return null;
+//   let temp = head.next;
+//   head.next = null;
+//   const reverse = (prev, cur) => {
+//     if (!cur) return prev;
+//     const temp = cur.next;
+//     cur.next = prev;
+//     return reverse(cur, temp);
+//   };
+//   return reverse(head, temp);
+// };
+
+function reverseList(root) {
+  let pre,
+    next = null;
+  while (root) {
+    next = root.next;
+    root.next = pre;
+    pre = root;
+    root = next;
   }
-  return reverse(head, temp)
+  return pre;
 }
 
-// const head = {
-//   val: 1,
-//   next: {
-//     val: 2,
-//     next: {
-//       val: 3,
-//       next: {
-//         val: 4,
-//         next: {
-//           val: 5,
-//           next: null
-//         }
-//       }
-//     }
-//   }
-// }
-// console.log(JSON.stringify(reverseList(head)))
+const head = {
+  val: 1,
+  next: {
+    val: 2,
+    next: {
+      val: 3,
+      next: {
+        val: 4,
+        next: {
+          val: 5,
+          next: null,
+        },
+      },
+    },
+  },
+};
+console.log(JSON.stringify(reverseList(head)));

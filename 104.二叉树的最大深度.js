@@ -41,31 +41,29 @@
  * @return {number}
  */
 // var maxDepth = function(root) {
-//   if (root === null) return 0
-//   const leftDepth = maxDepth(root.left)
-//   const rightDepth = maxDepth(root.right)
-//   return Math.max(leftDepth, rightDepth) + 1
-// }
+//   if (root === null) return 0;
+//   return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+// };
 
 var maxDepth = function(root) {
-  if (root === null) return 0
-  const queue = []
-  let res = 0
-  queue.push(root)
+  if (root === null) return 0;
+  const queue = [];
+  let res = 0;
+  queue.push(root);
   while (queue.length) {
-    res++
-    const len = queue.length
-    let i = 0
+    res++;
+    const len = queue.length;
+    let i = 0;
     while (i < len) {
-      const front = queue.shift()
+      const front = queue.shift();
       if (front.left) {
-        queue.push(front.left)
+        queue.push(front.left);
       }
       if (front.right) {
-        queue.push(front.right)
+        queue.push(front.right);
       }
-      i++
+      i++;
     }
   }
-  return res
-}
+  return res;
+};
