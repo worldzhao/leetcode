@@ -1,9 +1,9 @@
-const getListLength = l => {
-  let i = 0
-  let p = l
+const getListLength = (l) => {
+  let i = 0;
+  let p = l;
   while (p) {
-    i++
-    p = p.next
+    i++;
+    p = p.next;
   }
-  return i
-}
+  return i;
+};

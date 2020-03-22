@@ -1,10 +1,10 @@
 class MinHeap {
   constructor(initArr) {
     if (Array.isArray(initArr)) {
-      this.data = initArr
-      this.heapify()
+      this.data = initArr;
+      this.heapify();
     } else {
-      this.data = []
+      this.data = [];
     }
   }
 
@@ -13,7 +13,7 @@ class MinHeap {
    * @return {number}
    */
   size() {
-    return this.data.length
+    return this.data.length;
   }
 
   /**
@@ -21,7 +21,7 @@ class MinHeap {
    * @return {boolean}
    */
   isEmpty() {
-    return !this.data.length
+    return !this.data.length;
   }
 
   /**
@@ -30,8 +30,8 @@ class MinHeap {
    * @return {number}
    */
   parent(i) {
-    if (i === 0) throw new Error("index-0 doesn't have parent")
-    return parseInt((i - 1) / 2, 10)
+    if (i === 0) throw new Error("index-0 doesn't have parent");
+    return parseInt((i - 1) / 2, 10);
   }
 
   /**
@@ -40,7 +40,7 @@ class MinHeap {
    * @return {number}
    */
   leftChild(i) {
-    return 2 * i + 1
+    return 2 * i + 1;
   }
 
   /**
@@ -49,7 +49,7 @@ class MinHeap {
    * @return {number}
    */
   rightChild(i) {
-    return 2 * i + 2
+    return 2 * i + 2;
   }
 
   /**
@@ -58,9 +58,9 @@ class MinHeap {
    * @param {number} j
    */
   swap(i, j) {
-    const temp = this.data[i]
-    this.data[i] = this.data[j]
-    this.data[j] = temp
+    const temp = this.data[i];
+    this.data[i] = this.data[j];
+    this.data[j] = temp;
   }
 
   /**
@@ -69,8 +69,8 @@ class MinHeap {
    * @param {*} e
    */
   add(e) {
-    this.data.push(e)
-    this._siftUp(this.size() - 1)
+    this.data.push(e);
+    this._siftUp(this.size() - 1);
   }
 
   /**
@@ -79,9 +79,9 @@ class MinHeap {
    */
   _siftUp(i) {
     while (i > 0 && this.data[this.parent(i)] > this.data[i]) {
-      const parentIndex = this.parent(i)
-      this.swap(i, parentIndex)
-      i = parentIndex
+      const parentIndex = this.parent(i);
+      this.swap(i, parentIndex);
+      i = parentIndex;
     }
   }
 
@@ -90,8 +90,8 @@ class MinHeap {
    */
   findMin() {
     if (this.size() === 0)
-      throw new Error('Can not findMin when heap is empty.')
-    return this.data[0]
+      throw new Error("Can not findMin when heap is empty.");
+    return this.data[0];
   }
 
   /**
@@ -100,11 +100,11 @@ class MinHeap {
    * @return {number}
    */
   extractMin() {
-    const ret = this.findMin()
-    this.swap(0, this.size() - 1)
-    this.data.pop()
-    this._siftDown(0)
-    return ret
+    const ret = this.findMin();
+    this.swap(0, this.size() - 1);
+    this.data.pop();
+    this._siftDown(0);
+    return ret;
   }
 
   /**
@@ -113,20 +113,20 @@ class MinHeap {
    */
   _siftDown(i) {
     while (this.leftChild(i) < this.size()) {
-      const leftChildIndex = this.leftChild(i)
-      const rightChildIndex = leftChildIndex + 1
-      let tempIndex = leftChildIndex
+      const leftChildIndex = this.leftChild(i);
+      const rightChildIndex = leftChildIndex + 1;
+      let tempIndex = leftChildIndex;
       if (
         rightChildIndex < this.size() &&
         this.data[leftChildIndex] > this.data[rightChildIndex]
       ) {
-        tempIndex = rightChildIndex
+        tempIndex = rightChildIndex;
       }
       if (this.data[i] <= this.data[tempIndex]) {
-        break
+        break;
       }
-      this.swap(i, tempIndex)
-      i = tempIndex
+      this.swap(i, tempIndex);
+      i = tempIndex;
     }
   }
 
@@ -136,10 +136,10 @@ class MinHeap {
    * @return {number} the Min element in current heap
    */
   replace(e) {
-    const ret = this.findMin()
-    this.data[0] = e
-    this._siftDown(0)
-    return ret
+    const ret = this.findMin();
+    this.data[0] = e;
+    this._siftDown(0);
+    return ret;
   }
 
   /**
@@ -148,9 +148,9 @@ class MinHeap {
    */
   heapify() {
     for (let i = this.parent(this.size() - 1); i >= 0; i--) {
-      this._siftDown(i)
+      this._siftDown(i);
     }
   }
 }
 
-module.exports = MinHeap
+module.exports = MinHeap;

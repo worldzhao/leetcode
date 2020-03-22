@@ -1,3 +1,3 @@
-const PriorityQueue = require('./PriorityQueue')
+const PriorityQueue = require("./PriorityQueue");
 
-console.log(new PriorityQueue())
+console.log(new PriorityQueue());

@@ -1,27 +1,27 @@
-const TreeNode = require('./TreeNode')
+const TreeNode = require("./TreeNode");
 
 /**
  * 二叉搜索树 binary-search-tree
  */
 class BST {
   constructor() {
-    this.root = null
-    this.size = 0
+    this.root = null;
+    this.size = 0;
   }
 
   size() {
-    return this.size()
+    return this.size();
   }
 
   isEmpty() {
-    return this.size === 0
+    return this.size === 0;
   }
 
   /**
    * 向二分搜索树中添加新的元素 e
    */
   add(e) {
-    this.root = this._add(this.root, e)
+    this.root = this._add(this.root, e);
   }
 
   /**
@@ -30,36 +30,36 @@ class BST {
    */
   _add(node, e) {
     if (node === null) {
-      this.size++
-      return new TreeNode(e)
+      this.size++;
+      return new TreeNode(e);
     }
     if (e < node.e) {
-      node.left = this._add(node.left, e)
+      node.left = this._add(node.left, e);
     }
     if (e > node.e) {
-      node.right = this._add(node.right, e)
+      node.right = this._add(node.right, e);
     }
-    return node
+    return node;
   }
 
   /**
    * 二分搜索树中是否包含元素e
    */
   contains(e) {
-    return this._contains(this.root, e)
+    return this._contains(this.root, e);
   }
 
   /**
    * 以 node 为根的二分搜索树中是否包含元素e，递归算法
    */
   _contains(node, e) {
-    if (node === null) return false
-    if (e === node.e) return true
+    if (node === null) return false;
+    if (e === node.e) return true;
     if (e > node.e) {
-      return this._contains(node.right, e)
+      return this._contains(node.right, e);
     } else {
       // e < node.e
-      return this._contains(node.left, e)
+      return this._contains(node.left, e);
     }
   }
 
@@ -68,16 +68,16 @@ class BST {
    * 基于栈
    */
   preOrderNR() {
-    const stack = []
-    stack.push(this.root)
+    const stack = [];
+    stack.push(this.root);
     while (stack.length) {
-      const top = stack.pop()
-      console.log(top.e)
+      const top = stack.pop();
+      console.log(top.e);
       if (top.right !== null) {
-        stack.push(top.right)
+        stack.push(top.right);
       }
       if (top.left !== null) {
-        stack.push(top.left)
+        stack.push(top.left);
       }
     }
   }
@@ -86,7 +86,7 @@ class BST {
    * 二叉树的前序遍历
    */
   preOrder() {
-    this._preOrder(this.root)
+    this._preOrder(this.root);
   }
 
   /**
@@ -94,9 +94,9 @@ class BST {
    */
   _preOrder(node) {
     if (node !== null) {
-      console.log(node.e)
-      this._preOrder(node.left)
-      this._preOrder(node.right)
+      console.log(node.e);
+      this._preOrder(node.left);
+      this._preOrder(node.right);
     }
   }
 
@@ -104,7 +104,7 @@ class BST {
    * 二叉树的中序遍历 - 二叉搜索树中序遍历结果是排好序的
    */
   inOrder() {
-    this._inOrder(this.root)
+    this._inOrder(this.root);
   }
 
   /**
@@ -112,9 +112,9 @@ class BST {
    */
   _inOrder(node) {
     if (node !== null) {
-      this._inOrder(node.left)
-      console.log(node.e)
-      this._inOrder(node.right)
+      this._inOrder(node.left);
+      console.log(node.e);
+      this._inOrder(node.right);
     }
   }
 
@@ -122,7 +122,7 @@ class BST {
    * 二叉树的后序遍历
    */
   postOrder() {
-    this._postOrder(this.root)
+    this._postOrder(this.root);
   }
 
   /**
@@ -130,9 +130,9 @@ class BST {
    */
   _postOrder(node) {
     if (node !== null) {
-      this._postOrder(node.left)
-      this._postOrder(node.right)
-      console.log(node.e)
+      this._postOrder(node.left);
+      this._postOrder(node.right);
+      console.log(node.e);
     }
   }
 
@@ -141,16 +141,16 @@ class BST {
    * 基于队列
    */
   levelOrder() {
-    const queue = []
-    queue.push(this.root)
+    const queue = [];
+    queue.push(this.root);
     while (queue.length) {
-      const front = queue.shift()
-      console.log(front.e)
+      const front = queue.shift();
+      console.log(front.e);
       if (front.left !== null) {
-        queue.push(front.left)
+        queue.push(front.left);
       }
       if (front.right !== null) {
-        queue.push(front.right)
+        queue.push(front.right);
       }
     }
   }
@@ -160,9 +160,9 @@ class BST {
    */
   minimum() {
     if (this.isEmpty()) {
-      throw new Error('BST is empty!')
+      throw new Error("BST is empty!");
     }
-    return this._minimum(this.root).e
+    return this._minimum(this.root).e;
   }
 
   /**
@@ -170,9 +170,9 @@ class BST {
    */
   _minimum(node) {
     if (node.left === null) {
-      return node
+      return node;
     }
-    return this._minimum(node.left)
+    return this._minimum(node.left);
   }
 
   /**
@@ -180,9 +180,9 @@ class BST {
    */
   maximum() {
     if (this.isEmpty()) {
-      throw new Error('BST is empty!')
+      throw new Error("BST is empty!");
     }
-    return this._maximum(this.root).e
+    return this._maximum(this.root).e;
   }
 
   /**
@@ -190,18 +190,18 @@ class BST {
    */
   _maximum(node) {
     if (node.right === null) {
-      return node
+      return node;
     }
-    return this._maximum(node.right)
+    return this._maximum(node.right);
   }
 
   /**
    * 从二分搜索树中删除最小值所在节点，返回最小值
    */
   removeMin() {
-    const ret = this.minimum()
-    this.root = this._removeMin(this.root)
-    return ret
+    const ret = this.minimum();
+    this.root = this._removeMin(this.root);
+    return ret;
   }
 
   /**
@@ -210,22 +210,22 @@ class BST {
    */
   _removeMin(node) {
     if (node.left === null) {
-      const rightNode = node.right
-      node.right = null
-      this.size--
-      return rightNode
+      const rightNode = node.right;
+      node.right = null;
+      this.size--;
+      return rightNode;
     }
-    node.left = this._removeMin(node.left)
-    return node
+    node.left = this._removeMin(node.left);
+    return node;
   }
 
   /**
    * 从二分搜索树中删除最大值所在节点，返回最大值
    */
   removeMax() {
-    const ret = this.maximum()
-    this.root = this._removeMax(this.root)
-    return ret
+    const ret = this.maximum();
+    this.root = this._removeMax(this.root);
+    return ret;
   }
 
   /**
@@ -234,20 +234,20 @@ class BST {
    */
   _removeMax(node) {
     if (node.right === null) {
-      const leftNode = node.left
-      node.left = null
-      this.size--
-      return leftNode
+      const leftNode = node.left;
+      node.left = null;
+      this.size--;
+      return leftNode;
     }
-    node.right = this._removeMax(node.right)
-    return node
+    node.right = this._removeMax(node.right);
+    return node;
   }
 
   /**
    * 从二分搜索树中删除元素为e的节点
    */
   remove(e) {
-    this.root = this._remove(this.root, e)
+    this.root = this._remove(this.root, e);
   }
 
   /**
@@ -255,40 +255,40 @@ class BST {
    * 返回删除节点后新的二分搜索树的根
    */
   _remove(node, e) {
-    if (node === null) return null
+    if (node === null) return null;
     if (e > node.e) {
-      node.right = this._remove(node.right, e)
-      return node
+      node.right = this._remove(node.right, e);
+      return node;
     }
     if (e < node.e) {
-      node.left = this._remove(node.left, e)
-      return node
+      node.left = this._remove(node.left, e);
+      return node;
     }
     if (e === node.e) {
       // 待删除节点左子树为空的情况
       if (node.left === null) {
-        const rightNode = node.right
-        node.right = null
-        this.size--
-        return rightNode
+        const rightNode = node.right;
+        node.right = null;
+        this.size--;
+        return rightNode;
       }
       // 待删除节点右子树为空的情况
       if (node.right === null) {
-        const leftNode = node.left
-        node.left = null
-        this.size--
-        return leftNode
+        const leftNode = node.left;
+        node.left = null;
+        this.size--;
+        return leftNode;
       }
       // 待删除节点左右子树均不为空的情况
       // 找到比待删除节点大的所有节点中的最小节点，即待删除节点右子树的最小节点
       // 用这个节点顶替待删除节点的位置
-      const successor = this._minimum(node.right)
-      successor.right = this._removeMin(node.right)
-      successor.left = node.left
-      node.left = node.right = null
-      return successor
+      const successor = this._minimum(node.right);
+      successor.right = this._removeMin(node.right);
+      successor.left = node.left;
+      node.left = node.right = null;
+      return successor;
     }
   }
 }
 
-module.exports = BST
+module.exports = BST;

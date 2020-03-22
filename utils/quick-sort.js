@@ -26,7 +26,7 @@ const sort = (arr, l, r) => {
   }
 };
 
-const quickSort = arr => {
+const quickSort = (arr) => {
   sort(arr, 0, arr.length - 1);
   return arr;
 };

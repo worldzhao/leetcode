@@ -1,29 +1,29 @@
-const MaxHeap = require('../heap/MaxHeap')
+const MaxHeap = require("../heap/MaxHeap");
 
 class PriorityQueue {
   constructor() {
-    this.MaxHeap = new MaxHeap()
+    this.MaxHeap = new MaxHeap();
   }
 
   size() {
-    return this.MaxHeap.size()
+    return this.MaxHeap.size();
   }
 
   isEmpty() {
-    return this.MaxHeap.isEmpty()
+    return this.MaxHeap.isEmpty();
   }
 
   getFront() {
-    return this.MaxHeap.findMax()
+    return this.MaxHeap.findMax();
   }
 
   enqueue(e) {
-    this.MaxHeap.add(e)
+    this.MaxHeap.add(e);
   }
 
   dequeue() {
-    return this.MaxHeap.extractMax()
+    return this.MaxHeap.extractMax();
   }
 }
 
-module.exports = PriorityQueue
+module.exports = PriorityQueue;

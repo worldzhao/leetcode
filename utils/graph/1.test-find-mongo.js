@@ -9,7 +9,7 @@ const graph = {
   anuj: [],
   peggy: [],
   thom: [],
-  jonny: []
+  jonny: [],
 };
 
 function findMongoSupplier(graph) {

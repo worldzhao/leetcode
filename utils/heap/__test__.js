@@ -1,4 +1,4 @@
-const MaxHeap = require('./MaxHeap')
+const MaxHeap = require("./MaxHeap");
 /**
  * 将n个元素逐个插入到一个空堆中，算法复杂度为O(nlogn)
  * n * logn 时间复杂度
@@ -29,24 +29,24 @@ const MaxHeap = require('./MaxHeap')
 // console.log('after sorting by extractMax:', res)
 // console.log('----------')
 
-const MinHeap = require('./MinHeap')
-const minHeap = new MinHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44])
+const MinHeap = require("./MinHeap");
+const minHeap = new MinHeap([21, 2, 1, 54, 23, 14, 52, 32, 51, 44]);
 
-console.log('----------')
-console.log('the heap is:', minHeap.data)
-console.log('----------')
+console.log("----------");
+console.log("the heap is:", minHeap.data);
+console.log("----------");
 
-minHeap.replace(50)
-console.log('----------')
-console.log('after replaced by 50:', minHeap.data)
-console.log('----------')
+minHeap.replace(50);
+console.log("----------");
+console.log("after replaced by 50:", minHeap.data);
+console.log("----------");
 
-let res = []
+let res = [];
 
 while (!minHeap.isEmpty()) {
-  res.push(minHeap.extractMin())
+  res.push(minHeap.extractMin());
 }
 
-console.log('----------')
-console.log('after sorting by extractMin:', res)
-console.log('----------')
+console.log("----------");
+console.log("after sorting by extractMin:", res);
+console.log("----------");
