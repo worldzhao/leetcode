@@ -31,17 +31,7 @@
  * @param {number} target
  * @return {number[]}
  */
-// const twoSum = (nums, target) => {
-//   let arr = []
-//   for (let i = 0; i < nums.length; i++) {
-//     arr[nums[i]] = i￿
-//   }
-//   for (let i = 0; i < nums.length; i++) {
-//     const mirrorNum = target - nums[i]
-//     if (arr[mirrorNum] !== undefined && i !== arr[mirrorNum])
-//       return [i, arr[mirrorNum]]
-//   }
-// }
+//leetcode submit region begin(Prohibit modification and deletion)
 const twoSum = (nums, target) => {
   const arr = [];
   for (let i = 0; i < nums.length; i += 1) {
@@ -51,3 +41,4 @@ const twoSum = (nums, target) => {
     arr[mirrorNum] = i;
   }
 };
+//leetcode submit region end(Prohibit modification and deletion)
