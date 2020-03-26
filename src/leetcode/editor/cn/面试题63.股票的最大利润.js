@@ -42,19 +42,16 @@
  */
 var maxProfit = function (prices) {
   if (prices.length === 0) return 0;
-  let res = Number.MIN_SAFE_INTEGER;
-  const dp = [];
-  dp[0] = 0;
-  let lastMin = prices[0];
+  let lastMaxProfit = 0;
+  let lastMinPrice = prices[0];
   for (let i = 1; i < prices.length; i++) {
-    lastMin = Math.min(prices[i - 1], lastMin);
-    dp[i] = prices[i] - lastMin > 0 ? prices[i] - lastMin : 0;
+    lastMinPrice = Math.min(prices[i - 1], lastMinPrice);
+    const tempProfit =
+      prices[i] - lastMinPrice > 0 ? prices[i] - lastMinPrice : 0;
+
+    lastMaxProfit = Math.max(lastMaxProfit, tempProfit);
   }
 
-  for (let i = 0; i < prices.length; i++) {
-    res = Math.max(res, dp[i]);
-  }
-
-  return res;
+  return lastMaxProfit;
 };
 //leetcode submit region end(Prohibit modification and deletion)
