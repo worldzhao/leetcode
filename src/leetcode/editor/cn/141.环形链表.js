@@ -52,19 +52,27 @@
  */
 
 /**
+ * 快慢指针
+ * 快指针走两步 慢指针走一步
+ * 快指针追慢指针 每次追一步 必会相遇
+ * 假如快指针距离慢指针一步 下次即会相遇
+ * 假如快指针距离慢指针两步 下一次变成一步，转为上一种情况
+ * 以此类推 如果有环 一定会相遇
+ */
+
+/**
  * @param {ListNode} head
  * @return {boolean}
  */
 var hasCycle = function (head) {
-  let cur = head;
-  const set = new Set();
-  while (cur) {
-    if (set.has(cur)) {
-      return true;
-    } else {
-      set.add(cur);
-    }
-    cur = cur.next;
+  if (!head) return false;
+  let slow = head.next;
+  if (!slow) return false;
+  let fast = head.next.next;
+  while (fast) {
+    if (fast === slow) return true;
+    slow = slow.next;
+    fast = fast.next ? fast.next.next : null;
   }
   return false;
 };
