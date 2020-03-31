@@ -73,24 +73,52 @@
 // };
 
 // 记忆化自底向上迭代
+// var coinChange = function (coins, amount) {
+//   const memo = [0];
+//   for (let i = 1; i <= amount; i++) {
+//     let count = Number.MAX_SAFE_INTEGER;
+//     for (let j = 0; j < coins.length; j++) {
+//       const coin = coins[j];
+//       if (i - coin >= 0) {
+//         if (memo[i - coin] !== -1) {
+//           count = Math.min(1 + memo[i - coin], count);
+//         }
+//       }
+//     }
+//     memo[i] = count === Number.MAX_SAFE_INTEGER ? -1 : count;
+//   }
+//
+//   return memo[amount];
+// };
+
+//leetcode submit region begin(Prohibit modification and deletion)
+/**
+ * f(11) = 1 + min{f(10), f(9), f(6)}
+ * 状态转移方程 => f(i) = 1 + min{f(i-coin[0]), f(i-coin[1] ... f(i-coin[n])}
+ *            => dp[i] = 1 + min{dp[i-coin[0]], dp[i-coin[1]] ... dp[i-coin[n]]}
+ * base case  => dp[coin[i]] = 1
+ * @param coins
+ * @param amount
+ */
 var coinChange = function (coins, amount) {
-  const memo = [0];
-  for (let i = 1; i <= amount; i++) {
-    let count = Number.MAX_SAFE_INTEGER;
-    for (let j = 0; j < coins.length; j++) {
-      const coin = coins[j];
-      if (i - coin >= 0) {
-        if (memo[i - coin] !== -1) {
-          count = Math.min(1 + memo[i - coin], count);
-        }
-      }
-    }
-    memo[i] = count === Number.MAX_SAFE_INTEGER ? -1 : count;
+  const dp = [0];
+  for (let i = 0; i < coins.length; i++) {
+    dp[coins[i]] = 1;
   }
 
-  return memo[amount];
+  for (let i = 1; i <= amount; i++) {
+    if (typeof dp[i] !== "undefined") continue;
+    let min = Number.MAX_SAFE_INTEGER;
+    for (let j = 0; j < coins.length; j++) {
+      if (i - coins[j] < 0) continue;
+      min = dp[i - coins[j]] !== -1 ? Math.min(dp[i - coins[j]], min) : min;
+    }
+    dp[i] = min === Number.MAX_SAFE_INTEGER ? -1 : min + 1;
+  }
+  return dp[amount];
 };
+//leetcode submit region end(Prohibit modification and deletion)
 
-// console.log(coinChange([1, 2, 5], 11));
-// console.log(coinChange([2], 3));
-// console.log(coinChange([1, 2, 5], 100));
+console.log(coinChange([1, 2, 5], 11));
+console.log(coinChange([2], 3));
+console.log(coinChange([1, 2, 5], 100));
