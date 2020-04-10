@@ -110,6 +110,7 @@ var coinChange = function (coins, amount) {
     if (typeof dp[i] !== "undefined") continue;
     let min = Number.MAX_SAFE_INTEGER;
     for (let j = 0; j < coins.length; j++) {
+      // 金币比要凑的数额大 换下一个金币
       if (i - coins[j] < 0) continue;
       min = dp[i - coins[j]] !== -1 ? Math.min(dp[i - coins[j]], min) : min;
     }
