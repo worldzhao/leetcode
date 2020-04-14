@@ -33,16 +33,22 @@
  *
  *
  */
+//leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @param {number[]} prices
  * @return {number}
  */
 var maxProfit = function (prices) {
-  let maxProfit = 0;
-  for (let i = 0; i < prices.length; i++) {
-    const p = prices[i];
-    const currentProfit = Math.max(...prices.slice(i + 1)) - p;
-    maxProfit = currentProfit > maxProfit ? currentProfit : maxProfit;
+  if (prices.length === 0) return 0;
+  let lastMaxProfit = 0;
+  let lastMinPrice = prices[0];
+  for (let i = 1; i < prices.length; i++) {
+    lastMinPrice = Math.min(lastMinPrice, prices[i - 1]);
+    lastMaxProfit = Math.max(
+      prices[i] - lastMinPrice > 0 ? prices[i] - lastMinPrice : 0,
+      lastMaxProfit
+    );
   }
-  return maxProfit;
+  return lastMaxProfit;
 };
+//leetcode submit region end(Prohibit modification and deletion)
