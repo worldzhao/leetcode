@@ -50,42 +50,80 @@
  * @return {number[]}
  */
 var findAnagrams = function (s, p) {
+  const res = [];
   const pMap = new Map();
   for (let i = 0; i < p.length; i++) {
     const char = p[i];
     pMap.set(char, pMap.has(char) ? pMap.get(char) + 1 : 1);
   }
-  const sMap = new Map();
-  for (let i = 0; i < p.length; i++) {
-    const char = s[i];
-    sMap.set(char, sMap.has(char) ? sMap.get(char) + 1 : 1);
-  }
-  const validate = () => {
-    for (let i = 0; i < p.length; i++) {
-      const char = p[i];
-      if (sMap.get(char) !== pMap.get(char)) return false;
-    }
-    return true;
-  };
   let left = 0;
-  let right = p.length - 1;
-  const res = [];
+  let right = 0;
+  let match = 0;
+  const sMap = new Map();
   while (right < s.length) {
-    if (validate()) {
-      res.push(left);
+    const char = s[right];
+    if (pMap.has(char)) {
+      sMap.set(char, sMap.has(char) ? sMap.get(char) + 1 : 1);
+      sMap.get(char) === pMap.get(char) && (match += 1);
     }
 
-    const lChar = s[left];
-    const rChar = s[right + 1];
-    sMap.set(lChar, sMap.get(lChar) - 1);
-    sMap.set(rChar, sMap.has(rChar) ? sMap.get(rChar) + 1 : 1);
-
-    left++;
+    while (match === pMap.size) {
+      if (right - left + 1 === p.length) {
+        res.push(left);
+      }
+      const char = s[left];
+      if (pMap.has(char)) {
+        sMap.set(char, sMap.get(char) - 1);
+        sMap.get(char) < pMap.get(char) && (match -= 1);
+      }
+      left++;
+    }
     right++;
   }
+
   return res;
 };
 //leetcode submit region end(Prohibit modification and deletion)
 
-// console.log(findAnagrams("cbaebabacd", "abc"));
-// console.log(findAnagrams("abab", "ab"));
+/**
+ * 初始解法，定长窗口，map记录数量比较，子串首尾更新，map更新
+ */
+// var findAnagrams = function (s, p) {
+//     const pMap = new Map();
+//     for (let i = 0; i < p.length; i++) {
+//         const char = p[i];
+//         pMap.set(char, pMap.has(char) ? pMap.get(char) + 1 : 1);
+//     }
+//     const sMap = new Map();
+//     for (let i = 0; i < p.length; i++) {
+//         const char = s[i];
+//         sMap.set(char, sMap.has(char) ? sMap.get(char) + 1 : 1);
+//     }
+//     const validate = () => {
+//         for (let i = 0; i < p.length; i++) {
+//             const char = p[i];
+//             if (sMap.get(char) !== pMap.get(char)) return false;
+//         }
+//         return true;
+//     };
+//     let left = 0;
+//     let right = p.length - 1;
+//     const res = [];
+//     while (right < s.length) {
+//         if (validate()) {
+//             res.push(left);
+//         }
+//
+//         const lChar = s[left];
+//         const rChar = s[right + 1];
+//         sMap.set(lChar, sMap.get(lChar) - 1);
+//         sMap.set(rChar, sMap.has(rChar) ? sMap.get(rChar) + 1 : 1);
+//
+//         left++;
+//         right++;
+//     }
+//     return res;
+// };
+
+console.log(findAnagrams("cbaebabacd", "abc"));
+console.log(findAnagrams("abab", "ab"));
