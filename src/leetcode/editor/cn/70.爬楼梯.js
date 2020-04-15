@@ -38,17 +38,42 @@
  *
  *
  */
+//leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @param {number} n
  * @return {number}
  */
+// 自底向上迭代 优化空间复杂度
 var climbStairs = function (n) {
-  const dp = [1, 1];
-  for (let i = 2; i < n + 1; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2];
+  if (n === 0 || n === 1) return 1;
+  let pre1 = 1;
+  let pre2 = 1;
+  for (let i = 2; i <= n; i++) {
+    const next = pre1 + pre2;
+    const temp = pre2;
+    pre2 = next;
+    pre1 = temp;
   }
-  return dp[n];
+  return pre2;
 };
+//leetcode submit region end(Prohibit modification and deletion)
+
+// 1. 自顶向下递归
+// var climbStairs = function (n) {
+//   if (n === 0 || n === 1) return 1;
+//   return climbStairs(n - 1) + climbStairs(n - 2);
+// };
+
+// 2. 带备忘录的递归 缓存一下 用空间换时间
+
+// 3. 自底向上迭代
+// var climbStairs = function (n) {
+//   const dp = [1, 1];
+//   for (let i = 2; i <= n; i++) {
+//     dp[i] = dp[n - 1] + dp[n - 2];
+//   }
+//   return dp[n];
+// };
 
 // f(0) = 1
 // f(1) = 1
