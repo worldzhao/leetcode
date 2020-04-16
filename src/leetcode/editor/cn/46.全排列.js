@@ -30,10 +30,36 @@
  *
  */
 
-/* <============== 递归解法 ==================> */
-
+//leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @param {number[]} nums
  * @return {number[][]}
  */
-var permute = function (nums) {};
+var permute = function (nums) {
+  const res = [];
+  const temp = [];
+  const len = nums.length;
+
+  const _permute = () => {
+    if (temp.length === len) {
+      res.push(temp.slice());
+      return;
+    }
+
+    for (let i = 0; i < len; i++) {
+      const num = nums[i];
+      // 排除不合法的选择
+      if (temp.includes(num)) continue;
+      // 做出选择
+      temp.push(num);
+      // 进入下一步
+      _permute();
+      // 回退选择
+      temp.pop();
+    }
+  };
+
+  _permute();
+  return res;
+};
+//leetcode submit region end(Prohibit modification and deletion)
