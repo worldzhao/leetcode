@@ -42,36 +42,30 @@
  * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
  *
  */
+
+//leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @param {number[]} prices
  * @return {number}
  */
 var maxProfit = function (prices) {
-  let maxProfit = 0;
-  let i = 0;
-  while (i < prices.length - 1) {
-    while (i < prices.length - 1 && prices[i] >= prices[i + 1]) {
-      i++;
-    }
-    const valley = prices[i];
-    while (i < prices.length - 1 && prices[i] <= prices[i + 1]) {
-      i++;
-    }
-    const peek = prices[i];
-    maxProfit += peek - valley;
+  const len = prices.length;
+  const dp = [];
+  for (let i = 0; i < len; i++) {
+    dp.push([]);
   }
-  return maxProfit;
+  // 第1天不持有股票 利润为 0
+  dp[0][0] = 0;
+  // 第1天持有股票 利润为  -prices[0]
+  dp[0][1] = -prices[0];
+  for (let i = 1; i < prices.length; i++) {
+    // 第i天不持有股票的利润 = Math.max(第i-1天不持有股票的利润， 第i-1天持有股票的利润 + 卖出股票获取的收益)
+    dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+    // 第i天持有股票的利润 = Math.max(第i-1天持有股票的利润， 第i-1天不持有股票的利润 - 买入股票获取的价格)
+    dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+  }
+  return dp[len - 1][0];
 };
+//leetcode submit region end(Prohibit modification and deletion)
 
-// console.log(maxProfit([3, 3]))
-
-// var maxProfit = function(prices) {
-//   let maxProfit = 0
-//   for (let i = 1; i < prices.length; i++) {
-//     const profit = prices[i] - prices[i-1]
-//     if (profit > 0) {
-//       maxProfit += profit
-//     }
-//   }
-//   return maxProfit
-// }
+// console.log(maxProfit([7, 1, 5, 3, 6, 4]));
