@@ -36,12 +36,12 @@
 
 /**
  * f(0) = nums[0];
- * f(1) = nums[1];
- * f(2) = f(0) + nums[2];
- * f(3) = max(f(0), f(1)) + nums[3];
- * f(4) = max(f(0), f(1), f(2)) + nums[4];
+ * f(1) = max(f(0), nums[1]);
+ * f(2) = max(f(1), f(0) + nums[2]);
+ * f(3) = max(f(2), f(1) + nums[3]);
+ * f(4) = max(f(3), f(2) + nums[4]);
  * ...
- * f(n) =  max(f(0), f(1), f(2), ..., f(n-2)) + nums[n];
+ * f(n) = max(f(n-1), f(n-2) + nums[n]);
  */
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -54,17 +54,11 @@ var rob = function (nums) {
   if (len <= 0) return 0;
   if (len === 1) return nums[0];
 
-  const dp = [nums[0], nums[1]];
-  let lastMax = 0;
+  const dp = [nums[0], Math.max(nums[0], nums[1])];
   for (let i = 2; i < len; i++) {
-    lastMax = Math.max(dp[i - 2], lastMax);
-    dp[i] = lastMax + nums[i];
+    dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
   }
 
-  let res = 0;
-  for (let i = 0; i < dp.length; i++) {
-    res = Math.max(dp[i], res);
-  }
-  return res;
+  return dp[len - 1];
 };
 //leetcode submit region end(Prohibit modification and deletion)
