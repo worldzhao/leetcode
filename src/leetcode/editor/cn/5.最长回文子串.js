@@ -24,27 +24,21 @@
  * @return {string}
  */
 var longestPalindrome = function (s) {
-  if (s.length === 0) return "";
-  const isPalindrome = (s, start, end) => {
-    while (start < end) {
-      if (s[start] !== s[end]) {
-        return false;
-      }
-      start++;
-      end--;
-    }
-    return true;
-  };
+  let len = s.length;
+  const dp = new Array(len);
 
   let res = "";
-  for (let i = 0; i < s.length - 1; i++) {
-    for (let j = i + 1; j < s.length; j++) {
-      if (j - i + 1 > res.length && isPalindrome(s, i, j)) {
+  for (let i = len - 1; i >= 0; i--) {
+    if (typeof dp[i] === "undefined") dp[i] = [];
+    for (let j = 0; j < len; j++) {
+      dp[i][j] = s[i] === s[j] && (j - i <= 2 || dp[i + 1][j - 1]); // 注意此处短路运算符顺序 关系着填表顺序
+      if (dp[i][j] && j - i + 1 > res.length) {
         res = s.slice(i, j + 1);
       }
     }
   }
-
-  return res === "" ? s[0] : res;
+  return res;
 };
 //leetcode submit region end(Prohibit modification and deletion)
+
+console.log(longestPalindrome("babad"));
