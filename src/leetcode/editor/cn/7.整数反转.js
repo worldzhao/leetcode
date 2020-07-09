@@ -41,14 +41,23 @@
  * @return {number}
  */
 var reverse = function (x) {
-  let result = 0;
+  let ans = 0;
+  let operation = x >= 0 ? Math.floor : Math.ceil;
+  const max = Math.pow(2, 31) - 1;
+  const min = -Math.pow(2, 31);
   while (x !== 0) {
-    result = result * 10 + (x % 10);
-    if (x < 0) {
-      x = Math.ceil(x / 10);
-    } else {
-      x = Math.floor(x / 10);
+    const tail = x % 10;
+
+    if (ans > max / 10 || (ans === max / 10 && tail > 7)) {
+      return 0;
     }
+
+    if (ans < min / 10 || (ans === min / 10 && tail < -8)) {
+      return 0;
+    }
+
+    ans = ans * 10 + tail;
+    x = operation(x / 10);
   }
-  return result;
+  return ans;
 };
