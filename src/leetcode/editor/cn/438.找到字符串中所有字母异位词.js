@@ -50,40 +50,52 @@
  * @return {number[]}
  */
 var findAnagrams = function (s, p) {
-  const res = [];
-  const pMap = new Map();
+  const map1 = new Map();
   for (let i = 0; i < p.length; i++) {
-    const char = p[i];
-    pMap.set(char, pMap.has(char) ? pMap.get(char) + 1 : 1);
+    if (map1.has(p[i])) {
+      map1.set(p[i], map1.get(p[i]) + 1);
+    } else {
+      map1.set(p[i], 1);
+    }
   }
+  let res = [];
   let left = 0;
   let right = 0;
+
+  let map2 = new Map();
   let match = 0;
-  const sMap = new Map();
   while (right < s.length) {
     const char = s[right];
-    if (pMap.has(char)) {
-      sMap.set(char, sMap.has(char) ? sMap.get(char) + 1 : 1);
-      sMap.get(char) === pMap.get(char) && (match += 1);
+    if (map1.has(char)) {
+      map2.set(char, map2.has(char) ? map2.get(char) + 1 : 1);
+      map2.get(char) === map1.get(char) && (match += 1);
     }
 
-    while (match === pMap.size) {
-      if (right - left + 1 === p.length) {
+    right++;
+
+    while (match === map1.size) {
+      const char = s[left];
+      const len = right - left;
+      if (len === p.length) {
         res.push(left);
       }
-      const char = s[left];
-      if (pMap.has(char)) {
-        sMap.set(char, sMap.get(char) - 1);
-        sMap.get(char) < pMap.get(char) && (match -= 1);
+
+      if (map1.has(char)) {
+        map2.set(char, map2.get(char) - 1);
+        map2.get(char) < map1.get(char) && (match -= 1);
       }
+
       left++;
     }
-    right++;
   }
 
   return res;
 };
+
 //leetcode submit region end(Prohibit modification and deletion)
+
+console.log(findAnagrams("cbaebabacd", "abc"));
+console.log(findAnagrams("abab", "ab"));
 
 /**
  * 初始解法，定长窗口，map记录数量比较，子串首尾更新，map更新
@@ -125,5 +137,81 @@ var findAnagrams = function (s, p) {
 //     return res;
 // };
 
-console.log(findAnagrams("cbaebabacd", "abc"));
-console.log(findAnagrams("abab", "ab"));
+// 标准解法
+// var findAnagrams = function (s, p) {
+//   const res = [];
+//   const pMap = new Map();
+//   for (let i = 0; i < p.length; i++) {
+//     const char = p[i];
+//     pMap.set(char, pMap.has(char) ? pMap.get(char) + 1 : 1);
+//   }
+//   let left = 0;
+//   let right = 0;
+//   let match = 0;
+//   const sMap = new Map();
+//   while (right < s.length) {
+//     const char = s[right];
+//     if (pMap.has(char)) {
+//       sMap.set(char, sMap.has(char) ? sMap.get(char) + 1 : 1);
+//       sMap.get(char) === pMap.get(char) && (match += 1);
+//     }
+//
+//     while (match === pMap.size) {
+//       if (right - left + 1 === p.length) {
+//         res.push(left);
+//       }
+//       const char = s[left];
+//       if (pMap.has(char)) {
+//         sMap.set(char, sMap.get(char) - 1);
+//         sMap.get(char) < pMap.get(char) && (match -= 1);
+//       }
+//       left++;
+//     }
+//     right++;
+//   }
+//
+//   return res;
+// };
+
+// 复习一
+// var findAnagrams = function (s, p) {
+//   const map1 = new Map();
+//   for (let i = 0; i < p.length; i++) {
+//     if (map1.has(p[i])) {
+//       map1.set(p[i], map1.get(p[i]) + 1);
+//     } else {
+//       map1.set(p[i], 1);
+//     }
+//   }
+//
+//   const res = [];
+//   let left = 0;
+//   let right = p.length - 1;
+//
+//   const map2 = new Map();
+//   for (let j = 0; j <= right; j++) {
+//     if (map2.has(s[j])) {
+//       map2.set(s[j], map2.get(s[j]) + 1);
+//     } else {
+//       map2.set(s[j], 1);
+//     }
+//   }
+//   while (right <= s.length) {
+//     if ((map1.size = map2.size)) {
+//       let isMatch = true;
+//       for (let i = 0; i < p.length; i++) {
+//         if (map1.get(p[i]) !== map2.get(p[i])) {
+//           isMatch = false;
+//         }
+//       }
+//       if (isMatch) {
+//         res.push(left);
+//       }
+//     }
+//     map2.set(s[left], map2.get(s[left]) - 1);
+//     left++;
+//     right++;
+//     map2.set(s[right], map2.has(s[right]) ? map2.get(s[right]) + 1 : 1);
+//   }
+//   return res;
+// };
