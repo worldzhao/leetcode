@@ -90,23 +90,46 @@
 
 /* <=============== 滑动窗口 使用map 碰到重复的向**前**跳 跳到不重复 ==================> */
 
+// var lengthOfLongestSubstring = function (s) {
+//   const len = s.length;
+//   let ans = 0;
+//   let left = 0;
+//   const map = {};
+//   for (let right = 0; right < len; right++) {
+//     if (typeof map[s[right]] === "undefined") {
+//       map[s[right]] = right;
+//     } else {
+//       // 此处有坑 left已经跳到了比记录的重复索引大的索引 不可以再跳回去'abba'
+//       left = Math.max(left, map[s[right]] + 1);
+//       // 更新记录位置 'abcabcbb'
+//       map[s[right]] = right;
+//     }
+//     ans = Math.max(ans, right - left + 1);
+//   }
+//   return ans;
+// };
+
 var lengthOfLongestSubstring = function (s) {
-  const len = s.length;
-  let ans = 0;
+  const map = new Map();
+  let res = 0;
   let left = 0;
-  const map = {};
-  for (let right = 0; right < len; right++) {
-    if (typeof map[s[right]] === "undefined") {
-      map[s[right]] = right;
-    } else {
-      // 此处有坑 left已经跳到了比记录的重复索引大的索引 不可以再跳回去'abba'
-      left = Math.max(left, map[s[right]] + 1);
-      // 更新记录位置 'abcabcbb'
-      map[s[right]] = right;
+  let right = 0;
+
+  while (right < s.length) {
+    const char = s[right];
+    if (map.has(char)) {
+      left = Math.max(map.get(char), left) + 1;
+    } else if (right - left + 1 > res) {
+      res = right - left + 1;
     }
-    ans = Math.max(ans, right - left + 1);
+    map.set(char, right);
+    right++;
   }
-  return ans;
+
+  return res;
 };
 
+console.log(lengthOfLongestSubstring("abba"));
 console.log(lengthOfLongestSubstring("abcabcbb"));
+console.log(lengthOfLongestSubstring("bbbbb"));
+console.log(lengthOfLongestSubstring("pwwkew"));
