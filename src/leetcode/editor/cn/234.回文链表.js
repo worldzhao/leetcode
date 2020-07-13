@@ -10,8 +10,8 @@
 // 输出: false
 //
 // 示例 2:
-//
-// 输入: 1->2->2->1
+// 1 -> 2 -> 3 -> 2 -> 1 pre = 2 slow = 3 fast = 1
+// 输入: 1 -> 2 -> 2 -> 1 pre = 2 slow = 2 fast = null
 // 输出: true
 //
 //
@@ -33,17 +33,44 @@
  * @return {boolean}
  */
 var isPalindrome = function (head) {
-  const arr = [];
-  let cur = head;
-  while (cur) {
-    arr.push(cur.val);
-    cur = cur.next;
+  let pre = null;
+  let next = null;
+  let slow = head;
+  let fast = head;
+  while (fast !== null && fast.next !== null) {
+    next = slow.next;
+    fast = fast.next.next;
+
+    slow.next = pre;
+    pre = slow;
+    slow = next;
   }
-  let i = 0;
-  while (i < arr.length / 2) {
-    if (arr[i] !== arr[arr.length - i - 1]) return false;
-    i++;
+
+  if (fast !== null) {
+    slow = slow.next;
   }
+
+  while (pre) {
+    if (pre.val !== slow.val) return false;
+    pre = pre.next;
+    slow = slow.next;
+  }
+
   return true;
 };
 //leetcode submit region end(Prohibit modification and deletion)
+
+// var isPalindrome = function (head) {
+//   const arr = [];
+//   let cur = head;
+//   while (cur) {
+//     arr.push(cur.val);
+//     cur = cur.next;
+//   }
+//   let i = 0;
+//   while (i < arr.length / 2) {
+//     if (arr[i] !== arr[arr.length - i - 1]) return false;
+//     i++;
+//   }
+//   return true;
+// };
