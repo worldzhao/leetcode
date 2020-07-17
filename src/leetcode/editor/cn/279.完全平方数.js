@@ -27,31 +27,57 @@
  * @return {number}
  */
 var numSquares = function (n) {
+  const dp = [0];
   const nums = [];
   let i = 1;
   while (i * i <= n) {
     nums.push(i * i);
+    dp[i * i] = 1;
     i++;
   }
 
-  const memo = {};
-
-  const recu = (target) => {
-    if (typeof memo[target] !== "undefined") return memo[target];
-    let count = Number.MAX_SAFE_INTEGER;
-    if (target === 0) return 0;
-    for (let j = 0; j < nums.length; j++) {
-      if (nums[j] > target) break;
-      let res = recu(target - nums[j]);
-      memo[target] = res;
-      count = res === -1 ? count : Math.min(res, count);
+  for (let j = 0; j <= n; j++) {
+    if (typeof dp[j] === "undefined") {
+      dp[j] = -1;
+      for (let k = 0; k < nums.length; k++) {
+        if (j - nums[k] >= 0) {
+          dp[j] =
+            dp[j] === -1 ? dp[j - nums[k]] : Math.min(dp[j], dp[j - nums[k]]);
+        }
+      }
+      dp[j] = dp[j] === -1 ? -1 : dp[j] + 1;
     }
-
-    const res = count === Number.MAX_SAFE_INTEGER ? -1 : count + 1;
-    memo[target] = res;
-    return res;
-  };
-
-  return recu(n);
+  }
+  return dp[n];
 };
 //leetcode submit region end(Prohibit modification and deletion)
+
+// 自顶向下 递归解法
+// var numSquares = function (n) {
+//   const nums = [];
+//   let i = 1;
+//   while (i * i <= n) {
+//     nums.push(i * i);
+//     i++;
+//   }
+//
+//   const memo = {};
+//
+//   const recu = (target) => {
+//     if (typeof memo[target] !== "undefined") return memo[target];
+//     let count = Number.MAX_SAFE_INTEGER;
+//     if (target === 0) return 0;
+//     for (let j = 0; j < nums.length; j++) {
+//       if (nums[j] > target) break;
+//       let res = recu(target - nums[j]);
+//       memo[target] = res;
+//       count = res === -1 ? count : Math.min(res, count);
+//     }
+//
+//     const res = count === Number.MAX_SAFE_INTEGER ? -1 : count + 1;
+//     memo[target] = res;
+//     return res;
+//   };
+//
+//   return recu(n);
+// };
