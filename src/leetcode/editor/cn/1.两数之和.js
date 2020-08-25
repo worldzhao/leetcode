@@ -33,12 +33,23 @@
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 const twoSum = (nums, target) => {
-  const arr = [];
-  for (let i = 0; i < nums.length; i += 1) {
-    const currentNum = nums[i];
-    const mirrorNum = target - currentNum;
-    if (arr[currentNum] !== undefined) return [arr[currentNum], i];
-    arr[mirrorNum] = i;
+  const map = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (typeof map[target - nums[i]] === "undefined") {
+      map[nums[i]] = i;
+    } else {
+      return [map[target - nums[i]], i];
+    }
   }
 };
 //leetcode submit region end(Prohibit modification and deletion)
+
+// const twoSum = (nums, target) => {
+//   const arr = [];
+//   for (let i = 0; i < nums.length; i += 1) {
+//     const currentNum = nums[i];
+//     const mirrorNum = target - currentNum;
+//     if (arr[currentNum] !== undefined) return [arr[currentNum], i];
+//     arr[mirrorNum] = i;
+//   }
+// };

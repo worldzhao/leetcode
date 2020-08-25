@@ -30,28 +30,60 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function (l1, l2) {
-  let dummyHead = new ListNode(-1);
+  const dummyHead = new ListNode(-1);
   let cur = dummyHead;
+  let p = l1;
+  let q = l2;
+
   let carryOne = false;
+
   while (l1 || l2) {
-    let val = 0;
-    if (l1 === null) {
-      val = carryOne ? l2.val + 1 : l2.val;
-      l2 = l2.next;
-    } else if (l2 === null) {
-      val = carryOne ? l1.val + 1 : l1.val;
-      l1 = l1.next;
+    const val1 = l1 ? l1.val : 0;
+    const val2 = l2 ? l2.val : 0;
+    let val = val1 + val2;
+    if (carryOne) val = val + 1;
+    if (val >= 10) {
+      val = val - 10;
+      carryOne = true;
     } else {
-      val = carryOne ? l1.val + l2.val + 1 : l1.val + l2.val;
-      l1 = l1.next;
-      l2 = l2.next;
+      carryOne = false;
     }
-    carryOne = val > 9;
-    cur.next = new ListNode(val % 10);
+    cur.next = new ListNode(val);
     cur = cur.next;
+    l1 = l1 && l1.next;
+    l2 = l2 && l2.next;
   }
-  if (carryOne) cur.next = new ListNode(1);
+
+  if (carryOne) {
+    cur.next = new ListNode(1);
+  }
 
   return dummyHead.next;
 };
 //leetcode submit region end(Prohibit modification and deletion)
+
+// var addTwoNumbers = function (l1, l2) {
+//   let dummyHead = new ListNode(-1);
+//   let cur = dummyHead;
+//   let carryOne = false;
+//   while (l1 || l2) {
+//     let val = 0;
+//     if (l1 === null) {
+//       val = carryOne ? l2.val + 1 : l2.val;
+//       l2 = l2.next;
+//     } else if (l2 === null) {
+//       val = carryOne ? l1.val + 1 : l1.val;
+//       l1 = l1.next;
+//     } else {
+//       val = carryOne ? l1.val + l2.val + 1 : l1.val + l2.val;
+//       l1 = l1.next;
+//       l2 = l2.next;
+//     }
+//     carryOne = val > 9;
+//     cur.next = new ListNode(val % 10);
+//     cur = cur.next;
+//   }
+//   if (carryOne) cur.next = new ListNode(1);
+//
+//   return dummyHead.next;
+// };

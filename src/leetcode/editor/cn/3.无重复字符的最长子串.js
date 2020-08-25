@@ -38,11 +38,34 @@
  *
  *
  */
-/* <===============暴力解法 穷举出所有的子串 判断是否存在无重复字符 记录下长度 ==================> */
+//leetcode submit region begin(Prohibit modification and deletion)
 /**
  * @param {string} s
  * @return {number}
  */
+var lengthOfLongestSubstring = function (s) {
+  const len = s.length;
+  if (len === 0) return 0;
+  let i = 0;
+  let j = 0;
+  let ans = 1;
+  const set = new Set();
+
+  while (j < len) {
+    while (set.has(s[j])) {
+      set.delete(s[i]);
+      i++;
+    }
+    set.add(s[j]);
+    ans = Math.max(ans, j - i + 1);
+    j++;
+  }
+
+  return ans;
+};
+//leetcode submit region end(Prohibit modification and deletion)
+
+/* <===============暴力解法 穷举出所有的子串 判断是否存在无重复字符 记录下长度 ==================> */
 // var lengthOfLongestSubstring = function(s) {
 //   const len = s.length;
 //   let ans = 0;
@@ -109,27 +132,27 @@
 //   return ans;
 // };
 
-var lengthOfLongestSubstring = function (s) {
-  const map = new Map();
-  let res = 0;
-  let left = 0;
-  let right = 0;
+// var lengthOfLongestSubstring = function (s) {
+//   const map = new Map();
+//   let res = 0;
+//   let left = 0;
+//   let right = 0;
+//
+//   while (right < s.length) {
+//     const char = s[right];
+//     if (map.has(char)) {
+//       left = Math.max(map.get(char), left) + 1;
+//     } else if (right - left + 1 > res) {
+//       res = right - left + 1;
+//     }
+//     map.set(char, right);
+//     right++;
+//   }
+//
+//   return res;
+// };
 
-  while (right < s.length) {
-    const char = s[right];
-    if (map.has(char)) {
-      left = Math.max(map.get(char), left) + 1;
-    } else if (right - left + 1 > res) {
-      res = right - left + 1;
-    }
-    map.set(char, right);
-    right++;
-  }
-
-  return res;
-};
-
-console.log(lengthOfLongestSubstring("abba"));
-console.log(lengthOfLongestSubstring("abcabcbb"));
-console.log(lengthOfLongestSubstring("bbbbb"));
-console.log(lengthOfLongestSubstring("pwwkew"));
+console.log(lengthOfLongestSubstring("abba")); // 2
+console.log(lengthOfLongestSubstring("abcabcbb")); // 3
+console.log(lengthOfLongestSubstring("bbbbb")); // 1
+console.log(lengthOfLongestSubstring("pwwkew")); // 3
